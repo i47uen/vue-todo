@@ -4,7 +4,7 @@
         <form action="#">
             <p>Добавить задачу:</p>
             <div>
-                <input  v-model="newTaskTitle" type="text" placeholder="Ведите текст">
+                <input  v-model="newTaskTitle" type="text" placeholder="Введите текст">
                 <button @click="addTask">Добавить</button>
             </div>
         </form>
