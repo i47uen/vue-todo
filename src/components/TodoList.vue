@@ -1,48 +1,53 @@
 <template>
     <div class="todo-list container">
-        <h2>Список дел | items: {{todos.length}}</h2>
+        <h2>Список дел | всего дел: {{todos.length}}</h2>
         <form action="#">
             <p>Добавить задачу:</p>
-            <input  v-model="newTaskTitle" type="text" placeholder="Title" required>
-            <button @click="addTask">Добавить</button>
+            <div>
+                <input  v-model="newTaskTitle" type="text" placeholder="Ведите текст">
+                <button @click="addTask">Добавить</button>
+            </div>
         </form>
+        <hr>
         <div class="row" v-if="todos.length > 0">
             <div class="col-lg-6 row">
-                <p>Не завершенные:</p>
-
-                <TodoItem  />
+                <p>Незавершенные:</p>
 
                 <div v-bind:class="todo.completed ? 'todo-item completed col-lg-12' : 'todo-item col-lg-12'"
-                     v-for="todo in todos"
+                     v-for="(todo, index) in todos"
                      :key="todo.id"
                      v-show="!todo.completed"
                 >
                     <p>
-                        <button title="удалить" class="remove" @click="removeTask">🗑</button>
+                        <button title="удалить" class="remove" @click="removeTask(index)">🗑</button>
                         {{todo.title}} <span>#{{todo.id}}</span>
-                        <button title="завершить" class="toggle"  @click="taskToggleActive(todo)">{{todo.completed ? "+" : "x"}}</button>
+                        <button title="завершить" class="toggle"  @click="taskToggleActive(todo)">x</button>
                     </p>
                 </div>
+
             </div>
             <div class="col-lg-6 row">
                 <p>Завершенные:</p>
+
                 <div v-bind:class="todo.completed ? 'todo-item completed col-lg-12' : 'todo-item col-lg-12'"
-                     v-for="todo in todos"
+                     v-for="(todo, index) in todos"
                      :key="todo.id"
                      v-show="todo.completed"
                 >
                     <p>
-                        <button title="удалить" class="remove" @click="removeTask">🗑</button>
+                        <button title="удалить" class="remove" @click="removeTask(index)">🗑</button>
                         {{todo.title}} <span>#{{todo.id}}</span>
-                        <button title="вернуть" @click="taskToggleActive(todo)">{{todo.completed ? "+" : "x"}}</button>
+                        <button title="вернуть" @click="taskToggleActive(todo)">+</button>
                     </p>
                 </div>
+
             </div>
         </div>
 
-        <h2 v-else>
-            Нечего выводить
-        </h2>
+        <p v-else class="mt-5">
+            У вас нет дел. <br>
+            Добавьте задачу в форме выше ↑
+        </p>
 
     </div>
 </template>
@@ -53,12 +58,12 @@
         data: function() {
             return {
                 todos: [
-                    {id:0, title:"Todo title", completed:false},
-                    {id:1, title:"Todo title", completed:false},
-                    {id:2, title:"Todo title", completed:false},
-                    {id:3, title:"Todo title", completed:false},
-                    {id:4, title:"Todo title", completed:true},
-                    {id:5, title:"Todo title", completed:false},
+                    {id:1, title:"Изучить основы React", completed:true},
+                    {id:2, title:"Понять, что реакт сложна", completed:true},
+                    {id:3, title:"Изучить основы vue", completed:true},
+                    {id:4, title:"Написать приложение TodoApp", completed:true},
+                    {id:5, title:"Покормить кота", completed:false},
+                    {id:6, title:"Покормить второго кота", completed:false},
                 ],
                 newTaskTitle: ""
             }
@@ -68,10 +73,14 @@
                 task.completed = !task.completed
             },
             addTask(){
-                this.todos.push({id: this.todos.length+1, title: this.newTaskTitle , completed: false});
+                if (this.newTaskTitle != ""){
+                    this.todos.push({id: this.todos.length+1, title: this.newTaskTitle , completed: false});
+                    this.newTaskTitle = ""
+                } else return false
             },
             removeTask(index){
                 this.todos.splice(index, 1)
+                console.log("Delete el", index)
             }
         }
     }
@@ -79,11 +88,14 @@
 
 <style>
     .todo-list{
-        margin-top: 10vh;
+        margin-top: 5vh;
     }
     .todo-list .row{
         align-items: flex-start;
         margin: 0;
+        max-height: 70vh;
+        height: 100%;
+        overflow-y: auto;
     }
     .todo-item{
         border: 1px solid #ccc;
@@ -100,6 +112,8 @@
     .todo-item p{
         margin-top: 20px;
         font-weight: 100;
+        text-align: left;
+        padding-left: 40px;
     }
     .todo-item.completed{
         background: rgba(3,3,3, 0.1);
@@ -119,6 +133,7 @@
         top: 30.5%;
         background: none;
         transition: all .1s ease-in-out;
+        user-select: none;
     }
     .todo-item .remove{
         left: 20px;
@@ -127,6 +142,7 @@
     .todo-item button:hover{
         transform: scale(1.2);
         cursor: pointer;
+        color: indianred;
     }
 
     form{
@@ -139,9 +155,19 @@
         width: 70%;
         padding: 16px;
         height: 52px;
+        line-height: 0;
     }
     form button{
         width: 30%;
         height: 52px;
+    }
+
+    @media (max-width: 768px) {
+        form button{
+            font-size: 14px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
 </style>
