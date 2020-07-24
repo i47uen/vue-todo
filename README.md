@@ -1,5 +1,7 @@
 # vue-learn
 
+![alt text](screenshot.png)
+
 ## Project setup
 ```
 yarn install
