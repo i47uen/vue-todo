@@ -1,13 +1,13 @@
 <template>
     <div class="todo-list container">
         <h2>Список дел | всего дел: {{todos.length}}</h2>
-        <form action="#">
+        <div class="form">
             <p>Добавить задачу:</p>
             <div>
                 <input  v-model="newTaskTitle" type="text" placeholder="Введите текст">
                 <button @click="addTask">Добавить</button>
             </div>
-        </form>
+        </div>
         <hr>
         <div class="row" v-if="todos.length > 0">
             <div class="col-lg-6 row">
@@ -111,13 +111,13 @@
     }
     .todo-item p{
         margin-top: 20px;
-        font-weight: 100;
+        font-weight: 400;
         text-align: left;
         padding-left: 40px;
     }
     .todo-item.completed{
         background: rgba(3,3,3, 0.1);
-        color: #999;
+        /*color: #999;*/
         text-decoration: line-through;
     }
     .todo-item button {
@@ -145,19 +145,19 @@
         color: indianred;
     }
 
-    form{
+    .form{
         max-width: 535px;
         text-align: left;
         padding-left: 16px;
         margin-bottom: 15px;
     }
-    form input{
+    .form input{
         width: 70%;
         padding: 16px;
         height: 52px;
         line-height: 0;
     }
-    form button{
+    .form button{
         width: 30%;
         height: 52px;
     }
