@@ -15,12 +15,12 @@
 
                 <div v-bind:class="todo.completed ? 'todo-item completed col-lg-12' : 'todo-item col-lg-12'"
                      v-for="(todo, index) in todos"
-                     :key="todo.id"
+                     :key="index"
                      v-show="!todo.completed"
                 >
                     <p>
                         <button title="удалить" class="remove" @click="removeTask(index)">🗑</button>
-                        {{todo.title}} <span>#{{todo.id}}</span>
+                        {{todo.title}}
                         <button title="завершить" class="toggle"  @click="taskToggleActive(todo)">x</button>
                     </p>
                 </div>
@@ -31,12 +31,12 @@
 
                 <div v-bind:class="todo.completed ? 'todo-item completed col-lg-12' : 'todo-item col-lg-12'"
                      v-for="(todo, index) in todos"
-                     :key="todo.id"
+                     :key="index"
                      v-show="todo.completed"
                 >
                     <p>
                         <button title="удалить" class="remove" @click="removeTask(index)">🗑</button>
-                        {{todo.title}} <span>#{{todo.id}}</span>
+                        {{todo.title}}
                         <button title="вернуть" @click="taskToggleActive(todo)">+</button>
                     </p>
                 </div>
@@ -73,7 +73,7 @@
                 task.completed = !task.completed
             },
             addTask(){
-                if (this.newTaskTitle != ""){
+                if (this.newTaskTitle !== ""){
                     this.todos.push({id: this.todos.length+1, title: this.newTaskTitle , completed: false});
                     this.newTaskTitle = ""
                 } else return false
