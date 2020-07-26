@@ -1,13 +1,14 @@
 <template>
     <div class="todo-list container">
         <h2>Список дел | всего дел: {{todos.length}}</h2>
-        <div class="form">
+        <form @submit.prevent="onSubmit" class="form">
             <p>Добавить задачу:</p>
             <div>
+                <span v-show="formErr" style="color:red">{{formErrMsg}}</span>
                 <input  v-model="newTaskTitle" type="text" placeholder="Введите текст">
                 <button @click="addTask">Добавить</button>
             </div>
-        </div>
+        </form>
         <hr>
         <div class="row" v-if="todos.length > 0">
             <div class="col-lg-6 row">
@@ -65,7 +66,9 @@
                     {id:5, title:"Покормить кота", completed:false},
                     {id:6, title:"Покормить второго кота", completed:false},
                 ],
-                newTaskTitle: ""
+                newTaskTitle: "",
+                formErr: false,
+                formErrMsg: "Минимально количество символов: 5"
             }
         },
         methods: {
@@ -73,14 +76,20 @@
                 task.completed = !task.completed
             },
             addTask(){
-                if (this.newTaskTitle !== ""){
+                if (this.newTaskTitle !== "" && this.newTaskTitle.length >= 5){
                     this.todos.push({id: this.todos.length+1, title: this.newTaskTitle , completed: false});
                     this.newTaskTitle = ""
-                } else return false
+                    this.formErr = false
+                } else {
+                    this.formErr = true
+                }
             },
             removeTask(index){
                 this.todos.splice(index, 1)
                 console.log("Delete el", index)
+            },
+            onSubmit(){
+                //    0
             }
         }
     }
