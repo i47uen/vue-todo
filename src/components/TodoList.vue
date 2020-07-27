@@ -99,7 +99,7 @@
                 this.todos.splice(index, 1)
             },
             onSubmit(){
-                //    0
+                return null
             }
         }
     }
@@ -136,7 +136,6 @@
     }
     .todo-item.completed{
         background: rgba(3,3,3, 0.1);
-        /*color: #999;*/
         text-decoration: line-through;
     }
     .todo-item button {
