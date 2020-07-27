@@ -1,48 +1,47 @@
 <template>
     <div class="todo-list container">
-        <h2>Список дел | всего дел: {{todos.length}}</h2>
+        <h2>Список дел | всего дел: {{ todos.length }}</h2>
         <form @submit.prevent="onSubmit" class="form">
             <p>Добавить задачу:</p>
             <div>
-                <span v-show="formErr" style="color:red">{{formErrMsg}}</span>
+                <span v-show="formErr" style="color:red">{{ formErrMsg }}</span>
                 <input  v-model="newTaskTitle" type="text" placeholder="Введите текст">
                 <button @click="addTask">Добавить</button>
             </div>
         </form>
         <hr>
         <div class="row" v-if="todos.length > 0">
-            <div class="col-lg-6 row">
-                <p>Незавершенные:</p>
 
-                <div v-bind:class="todo.completed ? 'todo-item completed col-lg-12' : 'todo-item col-lg-12'"
-                     v-for="(todo, index) in todos"
+            <div class="col-lg-6 row">
+                <p>Не завершенные:</p>
+                <div v-for="(todo, index) in inCompletedTasks"
+                     :class="{completed : todo.completed}"
+                     class="col-lg-12 todo-item"
                      :key="index"
-                     v-show="!todo.completed"
                 >
                     <p>
                         <button title="удалить" class="remove" @click="removeTask(index)">🗑</button>
-                        {{todo.title}}
-                        <button title="завершить" class="toggle"  @click="taskToggleActive(todo)">x</button>
-                    </p>
-                </div>
-
-            </div>
-            <div class="col-lg-6 row">
-                <p>Завершенные:</p>
-
-                <div v-bind:class="todo.completed ? 'todo-item completed col-lg-12' : 'todo-item col-lg-12'"
-                     v-for="(todo, index) in todos"
-                     :key="index"
-                     v-show="todo.completed"
-                >
-                    <p>
-                        <button title="удалить" class="remove" @click="removeTask(index)">🗑</button>
-                        {{todo.title}}
+                        {{ todo.title }}
                         <button title="вернуть" @click="taskToggleActive(todo)">+</button>
                     </p>
                 </div>
-
             </div>
+
+            <div class="col-lg-6 row">
+                <p>Завершенные:</p>
+                <div v-for="(todo, index) in completedTasks"
+                     :class="{completed : todo.completed}"
+                     class="col-lg-12 todo-item"
+                     :key="index"
+                >
+                    <p>
+                        <button title="удалить" class="remove" @click="removeTask(index)">🗑</button>
+                        {{ todo.title }}
+                        <button title="вернуть" @click="taskToggleActive(todo)">+</button>
+                    </p>
+                </div>
+            </div>
+
         </div>
 
         <p v-else class="mt-5">
@@ -71,6 +70,18 @@
                 formErrMsg: "Минимально количество символов: 5"
             }
         },
+        computed:{
+          completedTasks: function () {
+            return this.todos.filter(function (todo) {
+                return todo.completed
+            })
+          },
+          inCompletedTasks: function () {
+              return this.todos.filter(function (todo) {
+                  return !todo.completed
+              })
+          }
+        },
         methods: {
             taskToggleActive(task){
                 task.completed = !task.completed
@@ -86,7 +97,6 @@
             },
             removeTask(index){
                 this.todos.splice(index, 1)
-                console.log("Delete el", index)
             },
             onSubmit(){
                 //    0
