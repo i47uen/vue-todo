@@ -11,7 +11,7 @@
         </form>
         <hr>
         <div class="row" v-if="todos.length > 0">
-
+            <transition name="fade">
             <div class="col-lg-6 row">
                 <p>Не завершенные:</p>
                 <div v-for="(todo, index) in inCompletedTasks"
@@ -20,12 +20,13 @@
                      :key="index"
                 >
                     <p>
-                        <button title="удалить" class="remove" @click="removeTask(index)">🗑</button>
+<!--                        <button title="удалить" class="remove" @click="todos.splice(index, 1)">🗑</button>-->
                         {{ todo.title }}
-                        <button title="вернуть" @click="taskToggleActive(todo)">+</button>
+                        <button title="вернуть" @click="taskToggleActive(todo)">x</button>
                     </p>
                 </div>
             </div>
+            </transition>
 
             <div class="col-lg-6 row">
                 <p>Завершенные:</p>
@@ -35,7 +36,6 @@
                      :key="index"
                 >
                     <p>
-                        <button title="удалить" class="remove" @click="removeTask(index)">🗑</button>
                         {{ todo.title }}
                         <button title="вернуть" @click="taskToggleActive(todo)">+</button>
                     </p>
@@ -94,9 +94,6 @@
                 } else {
                     this.formErr = true
                 }
-            },
-            removeTask(index){
-                this.todos.splice(index, 1)
             },
             onSubmit(){
                 return null
