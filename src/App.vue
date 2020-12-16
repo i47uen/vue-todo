@@ -1,8 +1,19 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div class="home">
+    <TodoList />
   </div>
 </template>
+
+<script>
+import TodoList from "@/components/TodoList";
+export default {
+  name: 'Home',
+  components: {
+    TodoList
+  }
+}
+</script>
+
 
 <style>
   *{
@@ -13,7 +24,7 @@
     overflow: hidden;
   }
   #app {
-    font-family: Avenir, sans-serif;
+    font-family: sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
