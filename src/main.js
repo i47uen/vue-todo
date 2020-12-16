@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import "./assets/css/main.css"
+import "./assets/css/_grid.css"
 import App from './App.vue'
 
 

@@ -7,7 +7,6 @@
 <script>
 import TodoList from "@/components/TodoList";
 export default {
-  name: 'Home',
   components: {
     TodoList
   }
@@ -16,6 +15,7 @@ export default {
 
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
   *{
     box-sizing: border-box;
   }
@@ -24,9 +24,7 @@ export default {
     overflow: hidden;
   }
   #app {
-    font-family: sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
     color: #2c3e50;
   }

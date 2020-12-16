@@ -20,7 +20,7 @@
                      :key="index"
                 >
                     <p>
-<!--                        <button title="удалить" class="remove" @click="todos.splice(index, 1)">🗑</button>-->
+                        <!-- <button title="удалить" class="remove" @click="todos.splice(index, 1)">🗑</button> -->
                         {{ todo.title }}
                         <button title="вернуть" @click="taskToggleActive(todo)">x</button>
                     </p>
@@ -136,7 +136,6 @@
         text-decoration: line-through;
     }
     .todo-item button {
-        font-family: sans-serif;
         border: 0;
         width: 20px;
         height: 20px;
